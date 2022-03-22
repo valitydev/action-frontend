@@ -1,0 +1,25 @@
+name: "Publish to NPM"
+description: "Publish to NPM"
+
+inputs:
+  version-up:
+    description: 'Version up'
+    default: 'true'
+    required: false
+  npm-token:
+    description: 'NPM token'
+    default: secrets.NPM_TOKEN
+    required: false
+
+runs:
+  using: composite
+  steps:
+    - name: Version up
+      if: inputs.version-up == 'true'
+      run: npm version prerelease --preid ${GITHUB_SHA::7} --no-git-tag-version
+      shell: bash
+    - name: Publish NPM
+      run: npm publish
+      shell: bash
+      env:
+        NODE_AUTH_TOKEN: ${{ inputs.npm-token }}
