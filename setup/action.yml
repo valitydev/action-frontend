@@ -1,16 +1,16 @@
-name: "Checkout and install NodeJS"
-description: "Checkout and install NodeJS"
+name: "Setup NodeJS"
+description: "Setup NodeJS"
+
 inputs:
   node-version:
     description: 'NodeJS version'
     default: '16.14.2'
     required: false
+
 runs:
   using: composite
   steps:
-    - name: Checkout
-      uses: actions/checkout@v3
-    - name: Init NodeJS
+    - name: Setup NodeJS
       uses: actions/setup-node@v2
       with:
         node-version: ${{ inputs.node-version }}

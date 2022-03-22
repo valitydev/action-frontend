@@ -1,0 +1,22 @@
+name: 'Frontend: Configured'
+
+on:
+  workflow_call:
+    outputs:
+      exists:
+        description: 'Exists'
+        value: ${{ jobs.exists.outputs.exists }}
+
+jobs:
+  exists:
+    name: Exists
+    runs-on: ubuntu-latest
+    outputs:
+      exists: ${{ steps.check_files.outputs.files_exists }}
+    steps:
+      - uses: actions/checkout@v3
+      - name: Check file existence
+        id: check_files
+        uses: andstor/file-existence-action@v1
+        with:
+          files: "package.json"
