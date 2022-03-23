@@ -2,13 +2,12 @@ name: "Publish to NPM"
 description: "Publish to NPM"
 
 inputs:
-  version-up:
-    description: 'Version up'
-    default: 'true'
-    required: false
   npm-token:
-    description: 'NPM token'
-    default: secrets.NPM_TOKEN
+    description: The NPM access token to use when publishing
+    required: true
+  version-up:
+    description: Version up
+    default: "true"
     required: false
 
 runs:
