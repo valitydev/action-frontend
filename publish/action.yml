@@ -2,6 +2,9 @@ name: "Publish to NPM"
 description: "Publish to NPM"
 
 inputs:
+  npm-token:
+    description: The NPM access token to use when publishing
+    required: true
   version-up:
     description: 'Version up'
     default: 'true'
@@ -18,4 +21,4 @@ runs:
       run: npm publish
       shell: bash
       env:
-        NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        NODE_AUTH_TOKEN: ${{ inputs.NPM_TOKEN }}
