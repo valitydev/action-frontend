@@ -6,10 +6,6 @@ inputs:
     description: 'Version up'
     default: 'true'
     required: false
-  npm-token:
-    description: 'NPM token'
-    default: secrets.NPM_TOKEN
-    required: false
 
 runs:
   using: composite
@@ -22,4 +18,4 @@ runs:
       run: npm publish
       shell: bash
       env:
-        NODE_AUTH_TOKEN: ${{ inputs.npm-token }}
+        NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
