@@ -6,8 +6,8 @@ inputs:
     description: The NPM access token to use when publishing
     required: true
   version-up:
-    description: 'Version up'
-    default: 'true'
+    description: Version up
+    default: "true"
     required: false
 
 runs:
