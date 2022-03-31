@@ -9,15 +9,21 @@ inputs:
     description: Version up
     default: "true"
     required: false
+  directory:
+    description: Directory
+    default: "./"
+    required: false
 
 runs:
   using: composite
   steps:
     - name: Version up
       if: inputs.version-up == 'true'
+      working-directory: ${{ inputs.directory }}
       run: npm version prerelease --preid ${GITHUB_SHA::7} --no-git-tag-version
       shell: bash
     - name: Publish NPM
+      working-directory: ${{ inputs.directory }}
       run: npm publish
       shell: bash
       env:
