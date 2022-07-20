@@ -1,10 +1,10 @@
-name: 'Frontend: Configured'
+name: "Frontend: Configured"
 
 on:
   workflow_call:
     outputs:
       exists:
-        description: 'Exists'
+        description: "Exists"
         value: ${{ jobs.exists.outputs.exists }}
 
 jobs:
