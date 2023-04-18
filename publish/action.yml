@@ -17,14 +17,17 @@ inputs:
 runs:
   using: composite
   steps:
-    - name: Version up
-      if: inputs.version-up == 'true'
-      working-directory: ${{ inputs.directory }}
-      run: npm version prerelease --preid ${GITHUB_SHA::7} --no-git-tag-version
-      shell: bash
     - name: Publish NPM
+      if: inputs.version-up == 'false'
       working-directory: ${{ inputs.directory }}
       run: npm publish
+      shell: bash
+      env:
+        NODE_AUTH_TOKEN: ${{ inputs.npm-token }}
+    - name: Publish NPM (version up)
+      if: inputs.version-up == 'true'
+      working-directory: ${{ inputs.directory }}
+      run: npm publish || (npm version prerelease --preid ${GITHUB_SHA::7} --no-git-tag-version && npm publish)
       shell: bash
       env:
         NODE_AUTH_TOKEN: ${{ inputs.npm-token }}
