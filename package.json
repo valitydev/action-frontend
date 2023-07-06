@@ -1,6 +1,6 @@
 {
   "name": "@vality/action-frontend",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -17,6 +17,6 @@
   },
   "homepage": "https://github.com/valitydev/action-frontend#readme",
   "dependencies": {
-    "prettier": "^2.6.0"
+    "prettier": "^3.0.0"
   }
 }
