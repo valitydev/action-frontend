@@ -14,7 +14,7 @@ jobs:
     outputs:
       exists: ${{ steps.check_files.outputs.files_exists }}
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Check file existence
         id: check_files
         uses: andstor/file-existence-action@v1
