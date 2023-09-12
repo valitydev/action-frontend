@@ -4,7 +4,7 @@ description: "Setup NodeJS"
 inputs:
   node-version:
     description: "NodeJS version"
-    default: "18"
+    default: "20"
     required: false
 
 runs:
