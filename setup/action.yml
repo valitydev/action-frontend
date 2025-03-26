@@ -6,6 +6,10 @@ inputs:
     description: "NodeJS version"
     default: "lts/*"
     required: false
+  npm-not-ci:
+    description: "Run npm not ci"
+    default: "false"
+    required: false
   npm-install-force:
     description: "Force npm install"
     default: "false"
@@ -22,9 +26,16 @@ runs:
         registry-url: "https://registry.npmjs.org"
     - name: Install dependencies
       run: |
-        if [ "${{ inputs.npm-install-force }}" = "true" ]; then
-          npm ci --force
+        CMD="npm"
+        if [ "${{ inputs.npm-not-ci }}" = "true" ]; then
+          CMD="${CMD} install"
         else
-          npm ci
+          CMD="${CMD} ci"
         fi
+
+        if [ "${{ inputs.npm-install-force }}" = "true" ]; then
+          CMD="${CMD} --force"
+        fi
+
+        ${CMD}
       shell: bash
