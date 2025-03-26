@@ -1,18 +1,30 @@
 name: "Setup NodeJS"
-description: "Setup NodeJS"
+description: "Setup NodeJS & install dependencies"
 
 inputs:
   node-version:
     description: "NodeJS version"
-    default: "20"
+    default: "lts/*"
+    required: false
+  npm-install-force:
+    description: "Force npm install"
+    default: "false"
     required: false
 
 runs:
   using: composite
   steps:
     - name: Setup NodeJS
-      uses: actions/setup-node@v3
+      uses: actions/setup-node@v4
       with:
         node-version: ${{ inputs.node-version }}
         cache: "npm"
         registry-url: "https://registry.npmjs.org"
+    - name: Install dependencies
+      run: |
+        if [ "${{ inputs.npm-install-force }}" = "true" ]; then
+          npm ci --force
+        else
+          npm ci
+        fi
+      shell: bash
