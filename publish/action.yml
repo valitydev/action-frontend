@@ -31,7 +31,8 @@ runs:
       run: |
         PREFIX=""
         if [ "${{ github.event_name }}" == "pull_request" ]; then
-          PREFIX="${{ inputs.pr-version-tag }}-${{ github.event.number }}-$(echo "${{ github.event.pull_request.head.sha }}" | cut -c1-7)"
+          PR_SHA_SHORT=$(echo "${{ github.event.pull_request.head.sha }}" | cut -c1-7)
+          PREFIX="${{ inputs.pr-version-tag }}-${{ github.event.number }}-$PR_SHA_SHORT"
         else
           PREFIX="${GITHUB_SHA::7}"
         fi
