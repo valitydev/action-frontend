@@ -19,11 +19,11 @@ runs:
   using: composite
   steps:
     - name: Setup NodeJS
-      uses: ../setup
+      uses: valitydev/action-frontend/setup@v2
       with:
         node-version: ${{ inputs.node-version }}
     - name: Install dependencies
-      uses: ../install
+      uses: valitydev/action-frontend/install@v2
       with:
         npm-not-ci: ${{ inputs.npm-not-ci }}
         npm-install-force: ${{ inputs.npm-install-force }}
