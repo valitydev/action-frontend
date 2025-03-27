@@ -13,10 +13,6 @@ inputs:
     description: Directory
     default: "./"
     required: false
-  pr:
-    description: If this is a PR
-    default: "false"
-    required: false
   pr-label:
     description: PR label for publish (publish {label})
     default: ""
@@ -34,7 +30,7 @@ runs:
       working-directory: ${{ inputs.directory }}
       run: |
         PREFIX=""
-        if [ "${{ inputs.pr }}" == "true" ]; then
+        if [ "${{ github.event_name }}" == "pull_request" ]; then
           PREFIX="${{ inputs.pr-version-tag }}-${{ github.event.number }}-$(echo "${{ github.event.pull_request.head.sha }}" | cut -c1-7)"
         else
           PREFIX="${GITHUB_SHA::7}"
@@ -51,7 +47,7 @@ runs:
         && contains(github.event.pull_request.labels.*.name, format('publish {0}', inputs.pr-label))))
       working-directory: ${{ inputs.directory }}
       run: |
-        npm publish ${{ inputs.pr == 'true' && format('--tag {0}', inputs.pr-version-tag) || '' }}
+        npm publish ${{ github.event_name == 'pull_request' && format('--tag {0}', inputs.pr-version-tag) || '' }}
       shell: bash
       env:
         NODE_AUTH_TOKEN: ${{ inputs.npm-token }}
