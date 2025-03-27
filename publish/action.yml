@@ -37,8 +37,7 @@ runs:
         if [ "${{ inputs.npm-version-tag }}" != "" ]; then
           PREFIX="${{ inputs.npm-version-tag }}-${{ github.event.number }}-"
         fi
-        SHA=$(echo "${{ github.event.pull_request.head.sha }}" | cut -c1-7)
-        npm version prerelease --preid "${PREFIX}${SHA}" --no-git-tag-version
+        npm version prerelease --preid "${PREFIX}${GITHUB_SHA::7}" --no-git-tag-version
       shell: bash
       env:
         NODE_AUTH_TOKEN: ${{ inputs.npm-token }}
