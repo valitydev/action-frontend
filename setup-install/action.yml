@@ -1,0 +1,29 @@
+name: "Setup NodeJS and Install"
+description: "Setup NodeJS & install dependencies"
+
+inputs:
+  node-version:
+    description: "NodeJS version"
+    default: "lts/*"
+    required: false
+  npm-not-ci:
+    description: "Run npm install instead of npm ci"
+    default: "false"
+    required: false
+  npm-install-force:
+    description: "Force npm install"
+    default: "false"
+    required: false
+
+runs:
+  using: composite
+  steps:
+    - name: Setup NodeJS
+      uses: ../setup
+      with:
+        node-version: ${{ inputs.node-version }}
+    - name: Install dependencies
+      uses: ../install
+      with:
+        npm-not-ci: ${{ inputs.npm-not-ci }}
+        npm-install-force: ${{ inputs.npm-install-force }}
