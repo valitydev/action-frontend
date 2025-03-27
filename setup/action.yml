@@ -7,7 +7,7 @@ inputs:
     default: "lts/*"
     required: false
   npm-not-ci:
-    description: "Run npm not ci"
+    description: "Run npm install instead of npm ci"
     default: "false"
     required: false
   npm-install-force:
