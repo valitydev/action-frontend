@@ -1,4 +1,4 @@
-name: "Setup NodeJS"
+name: "Setup NodeJS and Install"
 description: "Setup NodeJS & install dependencies"
 
 inputs:
@@ -19,23 +19,11 @@ runs:
   using: composite
   steps:
     - name: Setup NodeJS
-      uses: actions/setup-node@v4
+      uses: ./../setup
       with:
         node-version: ${{ inputs.node-version }}
-        cache: "npm"
-        registry-url: "https://registry.npmjs.org"
     - name: Install dependencies
-      run: |
-        CMD="npm"
-        if [ "${{ inputs.npm-not-ci }}" = "true" ]; then
-          CMD="${CMD} install"
-        else
-          CMD="${CMD} ci"
-        fi
-
-        if [ "${{ inputs.npm-install-force }}" = "true" ]; then
-          CMD="${CMD} --force"
-        fi
-
-        ${CMD}
-      shell: bash
+      uses: ./../install
+      with:
+        npm-not-ci: ${{ inputs.npm-not-ci }}
+        npm-install-force: ${{ inputs.npm-install-force }}

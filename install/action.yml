@@ -1,9 +1,9 @@
-name: "Install dependencies"
-description: "Install dependencies"
+name: "Install Dependencies"
+description: "Install npm dependencies"
 
 inputs:
   npm-not-ci:
-    description: "Run npm not ci"
+    description: "Run npm install instead of npm ci"
     default: "false"
     required: false
   npm-install-force:
