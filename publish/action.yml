@@ -41,7 +41,7 @@ runs:
         NODE_AUTH_TOKEN: ${{ inputs.npm-token }}
     - name: Publish
       if: >
-        inputs.pr-only-labeled == 'false'
+        github.event_name != 'pull_request'
         || (contains(github.event.pull_request.labels.*.name, 'publish')
         || (inputs.pr-label != ''
         && contains(github.event.pull_request.labels.*.name, format('publish {0}', inputs.pr-label))))
