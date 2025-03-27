@@ -19,11 +19,11 @@ runs:
   using: composite
   steps:
     - name: Setup NodeJS
-      uses: ./../setup
+      uses: ../setup
       with:
         node-version: ${{ inputs.node-version }}
     - name: Install dependencies
-      uses: ./../install
+      uses: ../install
       with:
         npm-not-ci: ${{ inputs.npm-not-ci }}
         npm-install-force: ${{ inputs.npm-install-force }}
