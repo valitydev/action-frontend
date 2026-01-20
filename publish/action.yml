@@ -48,7 +48,7 @@ runs:
         && contains(github.event.pull_request.labels.*.name, format('publish {0}', inputs.pr-label))))
       working-directory: ${{ inputs.directory }}
       run: |
-        npm publish ${{ github.event_name == 'pull_request' && format('--tag {0}', inputs.pr-version-tag) || '' }}
+        npm publish --tag ${{ github.event_name == 'pull_request' && inputs.pr-version-tag || 'next' }}
       shell: bash
       env:
         NODE_AUTH_TOKEN: ${{ inputs.npm-token }}
