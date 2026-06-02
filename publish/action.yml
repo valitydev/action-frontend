@@ -11,7 +11,7 @@ inputs:
     default: "./"
     required: false
   pr-label:
-    description: PR label for publish (publish {label})
+    description: PR label for publish (publish or publish {label})
     default: ""
     required: false
   pr-version-tag:
@@ -26,6 +26,7 @@ runs:
       if: >
         inputs.pr-label == ''
         || contains(github.event.pull_request.labels.*.name, format('publish {0}', inputs.pr-label))
+        || contains(github.event.pull_request.labels.*.name, 'publish')
       working-directory: ${{ inputs.directory }}
       run: |
         if [ "${NPM_SKIP_VERSION_UP}" == "false" ]; then
