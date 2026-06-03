@@ -1,12 +1,31 @@
 name: "Setup NodeJS and Install"
 description: "Setup NodeJS & install dependencies"
 
+inputs:
+  release:
+    description: "Set to true for release builds; disables package-manager caching."
+    default: "false"
+    required: false
+  node-version:
+    description: "Optional Node.js version. Leave empty to read from package.json."
+    default: ""
+    required: false
+
 runs:
   using: composite
   steps:
-    - uses: actions/setup-node@v6
+    - name: Setup Node.js from file
+      if: ${{ inputs.node-version == '' }}
+      uses: actions/setup-node@v6
       with:
         node-version-file: package.json
+        package-manager-cache: ${{ inputs.release != 'true' }}
+    - name: Setup Node.js from input
+      if: ${{ inputs.node-version != '' }}
+      uses: actions/setup-node@v6
+      with:
+        node-version: ${{ inputs.node-version }}
+        package-manager-cache: ${{ inputs.release != 'true' }}
     - name: Install dependencies
       shell: bash
       run: npm ci
