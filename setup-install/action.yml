@@ -1,29 +1,12 @@
 name: "Setup NodeJS and Install"
 description: "Setup NodeJS & install dependencies"
 
-inputs:
-  node-version:
-    description: "NodeJS version"
-    default: "lts/*"
-    required: false
-  npm-not-ci:
-    description: "Run npm install instead of npm ci"
-    default: "false"
-    required: false
-  npm-install-force:
-    description: "Force npm install"
-    default: "false"
-    required: false
-
 runs:
   using: composite
   steps:
-    - name: Setup NodeJS
-      uses: valitydev/action-frontend/setup@v2
+    - uses: actions/setup-node@v6
       with:
-        node-version: ${{ inputs.node-version }}
+        node-version-file: package.json
     - name: Install dependencies
-      uses: valitydev/action-frontend/install@v2
-      with:
-        npm-not-ci: ${{ inputs.npm-not-ci }}
-        npm-install-force: ${{ inputs.npm-install-force }}
+      shell: bash
+      run: npm ci
