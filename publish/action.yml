@@ -40,7 +40,7 @@ runs:
           npm version prerelease --preid "${PREFIX}" --no-git-tag-version
         fi
 
-        npm publish --tag ${{ github.event_name == 'pull_request' && inputs.pr-version-tag || 'next' }}
+        npm publish --tag ${{ github.event_name == 'pull_request' && inputs.pr-version-tag || 'latest' }}
       shell: bash
       env:
         NPM_SKIP_VERSION_UP: ${{ inputs.npm-skip-version-up }}
