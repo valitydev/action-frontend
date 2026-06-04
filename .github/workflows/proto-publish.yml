@@ -3,6 +3,10 @@ name: "Publish Proto Library"
 on:
   workflow_call:
 
+permissions:
+  contents: read
+  id-token: write
+
 jobs:
   proto-publish:
     name: "Publish Proto Library"
@@ -13,6 +17,7 @@ jobs:
       - uses: valitydev/action-frontend/setup-install@v3
         with:
           release: true
+          node-version: "lts/*"
       - name: Build
         run: npm run codegen
       - name: Publish
