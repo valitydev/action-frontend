@@ -10,6 +10,10 @@ inputs:
     description: "Optional Node.js version. Leave empty to read from package.json."
     default: ""
     required: false
+  install:
+    description: "Set to true to use npm install instead of npm ci."
+    default: "false"
+    required: false
 
 runs:
   using: composite
@@ -28,4 +32,4 @@ runs:
         package-manager-cache: ${{ inputs.release != 'true' }}
     - name: Install dependencies
       shell: bash
-      run: npm ci
+      run: npm ${{ inputs.install == 'true' && 'install' || 'ci' }}
