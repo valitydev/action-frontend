@@ -14,6 +14,10 @@ inputs:
     description: "Set to true to use npm install instead of npm ci."
     default: "false"
     required: false
+  force:
+    description: "Set to true to pass --force to npm."
+    default: "false"
+    required: false
 
 runs:
   using: composite
@@ -32,4 +36,4 @@ runs:
         package-manager-cache: ${{ inputs.release != 'true' }}
     - name: Install dependencies
       shell: bash
-      run: npm ${{ inputs.install == 'true' && 'install' || 'ci' }}
+      run: npm ${{ inputs.install == 'true' && 'install' || 'ci' }} ${{ inputs.force == 'true' && '--force' || '' }}
