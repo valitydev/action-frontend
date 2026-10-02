@@ -8,8 +8,7 @@ jobs:
     name: "Check Proto Library"
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6
-      - uses: valitydev/action-setup-thrift@v1
+      - uses: actions/checkout@v7
       - uses: valitydev/action-frontend/setup-install@v3
       - name: Build
         run: npm run codegen
