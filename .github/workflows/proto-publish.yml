@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
-      - uses: valitydev/action-frontend/setup-install@v3
+      - uses: valitydev/action-frontend/setup-install@v4
         with:
           release: true
           node-version: "lts/*"
@@ -21,4 +21,4 @@ jobs:
       - name: Build
         run: npm run codegen
       - name: Publish
-        uses: valitydev/action-frontend/publish@v3
+        uses: valitydev/action-frontend/publish@v4
