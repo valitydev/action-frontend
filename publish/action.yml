@@ -14,36 +14,35 @@ inputs:
     description: PR label for publish (publish or publish {label})
     default: ""
     required: false
-  pr-version-tag:
-    description: Version tag for PR
-    default: "pr"
-    required: false
 
 runs:
   using: composite
   steps:
     - name: Publish
       if: >
-        inputs.pr-label == ''
-        || contains(github.event.pull_request.labels.*.name, format('publish {0}', inputs.pr-label))
+        github.event_name != 'pull_request'
         || contains(github.event.pull_request.labels.*.name, 'publish')
+        || (inputs.pr-label != ''
+        && contains(github.event.pull_request.labels.*.name, format('publish {0}', inputs.pr-label)))
       working-directory: ${{ inputs.directory }}
       run: |
         if [ "${NPM_SKIP_VERSION_UP}" == "false" ]; then
+          TIMESTAMP="$(date -u +%Y%m%d%H%M%S)"
           if [ "${GITHUB_EVENT_NAME}" == "pull_request" ]; then
             SHA_SHORT="${PR_HEAD_SHA::7}"
-            PREFIX="${PR_VERSION_TAG}-${PR_NUMBER}-${SHA_SHORT}"
+            SUFFIX="pr${PR_NUMBER}.${TIMESTAMP}.${SHA_SHORT}"
           else
-            PREFIX="${GITHUB_SHA::7}"
+            SHA_SHORT="${GITHUB_SHA::7}"
+            SUFFIX="r.${TIMESTAMP}.${SHA_SHORT}"
           fi
 
-          npm version prerelease --preid "${PREFIX}" --no-git-tag-version
+          BASE_VERSION="$(npm version patch --no-git-tag-version)"
+          npm version "${BASE_VERSION#v}-${SUFFIX}" --no-git-tag-version
         fi
 
-        npm publish --tag ${{ github.event_name == 'pull_request' && inputs.pr-version-tag || 'latest' }}
+        npm publish --tag ${{ github.event_name == 'pull_request' && 'pr' || 'latest' }}
       shell: bash
       env:
         NPM_SKIP_VERSION_UP: ${{ inputs.npm-skip-version-up }}
         PR_HEAD_SHA: ${{ github.event.pull_request.head.sha }}
         PR_NUMBER: ${{ github.event.number }}
-        PR_VERSION_TAG: ${{ inputs.pr-version-tag }}
