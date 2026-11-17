@@ -17,6 +17,6 @@
   },
   "homepage": "https://github.com/valitydev/action-frontend#readme",
   "dependencies": {
-    "prettier": "^3.9.10"
+    "prettier": "^3.10.1"
   }
 }
